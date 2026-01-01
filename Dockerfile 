@@ -1,0 +1,12 @@
+FROM python:3.10-slim
+
+# Instalar Poppler dentro del contenedor
+RUN apt-get update && apt-get install -y poppler-utils
+
+# Instalar dependencias Python
+RUN pip install flask pdf2image
+
+# Crear carpeta de trabajo
+WORKDIR /app
+
+CMD ["python3", "app.py"]

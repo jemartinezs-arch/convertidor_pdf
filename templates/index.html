@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Convertidor PDF Online</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #f9f9f9; color: #333; }
+        h1 { text-align: center; color: #444; }
+        section { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; cursor: pointer; border: none; background: #4CAF50; color: white; border-radius: 5px; font-size: 16px; }
+        button:hover { background: #45a049; }
+        input[type="file"] { margin-bottom: 10px; }
+        #fileName { font-style: italic; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>Convertidor PDF Online</h1>
+
+<section>
+    <h2>PDF → PNG</h2>
+    <form action="/convert/png" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInputPng" required>
+        <span id="fileNamePng"></span><br>
+        <button type="submit" onclick="this.innerText='Procesando…';">Convertir a PNG</button>
+    </form>
+</section>
+
+<section>
+    <h2>PDF → Word</h2>
+    <form action="/convert/word" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInputWord" required>
+        <span id="fileNameWord"></span><br>
+        <button type="submit" onclick="this.innerText='Procesando…';">Convertir a Word</button>
+    </form>
+</section>
+
+<script>
+document.getElementById('fileInputPng').addEventListener('change', (e)=>{
+    document.getElementById('fileNamePng').textContent = e.target.files[0].name;
+});
+document.getElementById('fileInputWord').addEventListener('change', (e)=>{
+    document.getElementById('fileNameWord').textContent = e.target.files[0].name;
+});
+</script>
+
+</body>
+</html>
