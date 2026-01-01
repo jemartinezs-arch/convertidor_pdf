@@ -2,44 +2,152 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Convertidor PDF Online</title>
+
+    <title>Convertidor PDF a Word y PNG Gratis Online</title>
+
+    <meta name="description" content="Convierte cualquier PDF a Word o imágenes PNG gratis. Compatible con PDFs escaneados y documentos complejos. Rápido, seguro y sin registro.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #f9f9f9; color: #333; }
-        h1 { text-align: center; color: #444; }
-        section { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        button { padding: 10px 20px; cursor: pointer; border: none; background: #4CAF50; color: white; border-radius: 5px; font-size: 16px; }
-        button:hover { background: #45a049; }
-        input[type="file"] { margin-bottom: 10px; }
-        #fileName { font-style: italic; margin-left: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 760px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        button {
+            padding: 12px 22px;
+            cursor: pointer;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #43a047;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+        }
+
+        .filename {
+            font-style: italic;
+            font-size: 14px;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
 
-<h1>Convertidor PDF Online</h1>
+<h1>Convertidor PDF a Word y PNG Online Gratis</h1>
+
+<p style="text-align:center;">
+    Convierte archivos PDF a documentos Word editables o imágenes PNG fácilmente.
+    Funciona con PDFs escaneados y documentos complejos.
+</p>
 
 <section>
-    <h2>PDF → PNG</h2>
+    <h2>📄 Convertir PDF a PNG</h2>
+    <p>
+        Extrae todas las páginas de un PDF como imágenes PNG de alta calidad.
+        Ideal para documentos escaneados.
+    </p>
+
     <form action="/convert/png" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInputPng" required>
-        <span id="fileNamePng"></span><br>
-        <button type="submit" onclick="this.innerText='Procesando…';">Convertir a PNG</button>
+        <input type="file" name="file" id="fileInputPng" accept="application/pdf" required>
+        <div class="filename" id="fileNamePng"></div>
+        <br>
+        <button type="submit" onclick="this.innerText='Procesando…';">
+            Convertir a PNG
+        </button>
     </form>
 </section>
 
 <section>
-    <h2>PDF → Word</h2>
+    <h2>📝 Convertir PDF a Word</h2>
+    <p>
+        Convierte PDFs con texto a archivos Word editables.
+        Mantiene párrafos y estructura básica del documento.
+    </p>
+
     <form action="/convert/word" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInputWord" required>
-        <span id="fileNameWord"></span><br>
-        <button type="submit" onclick="this.innerText='Procesando…';">Convertir a Word</button>
+        <input type="file" name="file" id="fileInputWord" accept="application/pdf" required>
+        <div class="filename" id="fileNameWord"></div>
+        <br>
+        <button type="submit" onclick="this.innerText='Procesando…';">
+            Convertir a Word
+        </button>
     </form>
 </section>
+
+<section>
+    <h2>ℹ️ ¿Cómo funciona este convertidor?</h2>
+    <p>
+        El archivo PDF se procesa directamente en el servidor y no se almacena.
+        Una vez convertido, el documento se descarga automáticamente.
+        No se requiere registro ni datos personales.
+    </p>
+</section>
+
+<footer>
+    © 2025 Convertidor PDF Online ·
+    <a href="/privacy">Política de Privacidad</a>
+</footer>
 
 <script>
-document.getElementById('fileInputPng').addEventListener('change', (e)=>{
+document.getElementById('fileInputPng').addEventListener('change', (e) => {
     document.getElementById('fileNamePng').textContent = e.target.files[0].name;
 });
-document.getElementById('fileInputWord').addEventListener('change', (e)=>{
+
+document.getElementById('fileInputWord').addEventListener('change', (e) => {
     document.getElementById('fileNameWord').textContent = e.target.files[0].name;
 });
 </script>
