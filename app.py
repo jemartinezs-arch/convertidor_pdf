@@ -7,6 +7,9 @@ import os
 import zipfile
 from io import BytesIO
 import re
+from flask import Flask, render_template, request
+import smtplib
+from email.message import EmailMessage
 
 app = Flask(__name__)
 
@@ -135,6 +138,27 @@ def procesar_pagina(word, page):
 
 # ---------------- Rutas Flask ----------------
 
+
+
+@app.route("/contacto", methods=["GET", "POST"])
+def contacto():
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        email = request.form["email"]
+        mensaje = request.form["mensaje"]
+
+        msg = EmailMessage()
+        msg.set_content(f"Nombre: {nombre}\nEmail: {email}\nMensaje:\n{mensaje}")
+        msg["Subject"] = "Nuevo mensaje desde Convertidor PDF"
+        msg["From"] = email
+        msg["To"] = "convertidorpdfa@gmail.com"
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login("convertidorpdfa@gmail.com", "aeeq hnfx hwqz pref")
+            smtp.send_message(msg)
+
+    return render_template("contact.html")
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -142,6 +166,8 @@ def home():
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html")
+
+
 
 
 
