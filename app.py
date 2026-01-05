@@ -139,6 +139,12 @@ def procesar_pagina(word, page):
 def home():
     return render_template("index.html")
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+
+
 # PDF → PNG
 @app.route("/convert/png", methods=["POST"])
 def pdf_to_png():
