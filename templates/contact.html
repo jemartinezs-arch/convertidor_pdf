@@ -66,7 +66,7 @@
 
 <h1>📬 Contáctanos</h1>
 
-<form method="POST" action="/contact">
+<form action="https://formspree.io/f/meeoyjol" method="POST">
     <label>Nombre</label>
     <input type="text" name="nombre" required>
 
@@ -76,8 +76,18 @@
     <label>Mensaje</label>
     <textarea name="mensaje" rows="5" required></textarea>
 
+    <!-- protección anti spam -->
+    <input type="text" name="_gotcha" style="display:none">
+
     <button type="submit">Enviar mensaje</button>
+
+    <input type="hidden" name="_subject" value="Nuevo mensaje desde Convertidor PDF">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="/contact?success=1">
+
+
 </form>
+
 
 <div class="info">
     También puedes escribirnos directamente a:<br>

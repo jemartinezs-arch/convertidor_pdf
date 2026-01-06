@@ -147,46 +147,8 @@ def terms():
 
 
 
-from flask import request, render_template, redirect, url_for, flash
-import smtplib
-import os
-from email.message import EmailMessage
-
-@app.route("/contact", methods=["GET", "POST"])
+@app.route("/contact")
 def contact():
-    print("EMAIL_USER:", os.environ.get("EMAIL_USER"))
-    print("EMAIL_PASS:", os.environ.get("EMAIL_PASS"))
-    if request.method == "POST":
-        try:
-            nombre = request.form["nombre"]
-            email = request.form["email"]
-            mensaje = request.form["mensaje"]
-
-            msg = EmailMessage()
-            msg.set_content(
-                f"Nombre: {nombre}\n"
-                f"Email del usuario: {email}\n\n"
-                f"Mensaje:\n{mensaje}"
-            )
-
-            msg["Subject"] = "Nuevo mensaje desde Convertidor PDF"
-            msg["From"] = os.environ.get("EMAIL_USER")  # IMPORTANTE
-            msg["To"] = os.environ.get("EMAIL_USER")
-
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-                smtp.login(
-                    os.environ.get("EMAIL_USER"),
-                    os.environ.get("EMAIL_PASS")
-                )
-                smtp.send_message(msg)
-
-            flash("✅ Mensaje enviado correctamente", "success")
-            return redirect(url_for("contact"))
-
-        except Exception as e:
-            import traceback
-            return f"❌ Error enviando mensaje: {e}<br><pre>{traceback.format_exc()}</pre>", 500
-
     return render_template("contact.html")
 
 
