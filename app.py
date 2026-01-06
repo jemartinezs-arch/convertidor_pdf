@@ -11,6 +11,8 @@ from flask import Flask, render_template, request
 import smtplib
 from email.message import EmailMessage
 
+
+
 app = Flask(__name__)
 
 OUTPUT_FOLDER = "static/outputs"
@@ -143,25 +145,48 @@ def procesar_pagina(word, page):
 def terms():
     return render_template("terms.html")
 
+
+
+from flask import request, render_template, redirect, url_for, flash
+import smtplib
+import os
+from email.message import EmailMessage
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        nombre = request.form["nombre"]
-        email = request.form["email"]
-        mensaje = request.form["mensaje"]
+        try:
+            nombre = request.form["nombre"]
+            email = request.form["email"]
+            mensaje = request.form["mensaje"]
 
-        msg = EmailMessage()
-        msg.set_content(f"Nombre: {nombre}\nEmail: {email}\nMensaje:\n{mensaje}")
-        msg["Subject"] = "Nuevo mensaje desde Convertidor PDF"
-        msg["From"] = email
-        msg["To"] = "convertidorpdfa@gmail.com"
+            msg = EmailMessage()
+            msg.set_content(
+                f"Nombre: {nombre}\n"
+                f"Email del usuario: {email}\n\n"
+                f"Mensaje:\n{mensaje}"
+            )
 
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            EMAIL_USER = os.environ.get("EMAIL_USER")
-            EMAIL_PASS = os.environ.get("EMAIL_PASS")
-            smtp.login(EMAIL_USER, EMAIL_PASS)
+            msg["Subject"] = "Nuevo mensaje desde Convertidor PDF"
+            msg["From"] = os.environ.get("EMAIL_USER")  # IMPORTANTE
+            msg["To"] = os.environ.get("EMAIL_USER")
+
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+                smtp.login(
+                    os.environ.get("EMAIL_USER"),
+                    os.environ.get("EMAIL_PASS")
+                )
+                smtp.send_message(msg)
+
+            flash("✅ Mensaje enviado correctamente", "success")
+            return redirect(url_for("contact"))
+
+        except Exception as e:
+            return f"❌ Error enviando mensaje: {e}", 500
 
     return render_template("contact.html")
+
+
 
 @app.route("/")
 def home():
@@ -217,5 +242,5 @@ def pdf_to_word():
     return send_file(output_path, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=10003)
 
