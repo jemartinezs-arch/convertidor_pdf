@@ -157,8 +157,9 @@ def contact():
         msg["To"] = "convertidorpdfa@gmail.com"
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            smtp.login("convertidorpdfa@gmail.com", "aeeq hnfx hwqz pref")
-            smtp.send_message(msg)
+            EMAIL_USER = os.environ.get("EMAIL_USER")
+            EMAIL_PASS = os.environ.get("EMAIL_PASS")
+            smtp.login(EMAIL_USER, EMAIL_PASS)
 
     return render_template("contact.html")
 
