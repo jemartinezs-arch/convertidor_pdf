@@ -154,6 +154,8 @@ from email.message import EmailMessage
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
+    print("EMAIL_USER:", os.environ.get("EMAIL_USER"))
+    print("EMAIL_PASS:", os.environ.get("EMAIL_PASS"))
     if request.method == "POST":
         try:
             nombre = request.form["nombre"]
@@ -182,7 +184,8 @@ def contact():
             return redirect(url_for("contact"))
 
         except Exception as e:
-            return f"❌ Error enviando mensaje: {e}", 500
+            import traceback
+            return f"❌ Error enviando mensaje: {e}<br><pre>{traceback.format_exc()}</pre>", 500
 
     return render_template("contact.html")
 
@@ -242,5 +245,5 @@ def pdf_to_word():
     return send_file(output_path, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10003)
+    app.run(host="0.0.0.0", port=10000)
 
