@@ -139,9 +139,12 @@ def procesar_pagina(word, page):
 # ---------------- Rutas Flask ----------------
 
 
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
 
-@app.route("/contacto", methods=["GET", "POST"])
-def contacto():
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
     if request.method == "POST":
         nombre = request.form["nombre"]
         email = request.form["email"]
@@ -213,5 +216,5 @@ def pdf_to_word():
     return send_file(output_path, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=10002)
 
