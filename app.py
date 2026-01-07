@@ -202,24 +202,43 @@ def pdf_to_png():
 # PDF → WORD
 @app.route("/convert/word", methods=["POST"])
 def pdf_to_word():
-    pdf_file = request.files["file"]
-    pdf_bytes = pdf_file.read()
-    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-    word = Document()
+    try:
+        if "file" not in request.files:
+            return "No se envió archivo", 400
 
-    style = word.styles['Normal']
-    style.font.name = 'Calibri'
-    style.font.size = Pt(11)
+        pdf_file = request.files["file"]
+        pdf_bytes = pdf_file.read()
 
-    for i, page in enumerate(doc):
-        procesar_pagina(word, page)
-        if i < len(doc) - 1:
-            word.add_page_break()
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        word = Document()
 
-    output_path = os.path.join(OUTPUT_FOLDER, "mejorado.docx")
-    word.save(output_path)
-    return send_file(output_path, as_attachment=True)
+        style = word.styles['Normal']
+        style.font.name = 'Calibri'
+        style.font.size = Pt(11)
+
+        for i, page in enumerate(doc):
+            procesar_pagina(word, page)
+            if i < len(doc) - 1:
+                word.add_page_break()
+
+        buffer = BytesIO()
+        word.save(buffer)
+        buffer.seek(0)
+
+        return send_file(
+            buffer,
+            as_attachment=True,
+            download_name="convertido.docx",
+            mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+
+    except Exception as e:
+        print("ERROR WORD:", e)
+        return f"Error procesando PDF a Word: {e}", 500
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10007)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+
 
