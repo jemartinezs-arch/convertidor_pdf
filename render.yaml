@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: convertidor-pdf
+    name: convertidor_pdf
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
