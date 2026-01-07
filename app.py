@@ -7,7 +7,6 @@ import os
 import zipfile
 from io import BytesIO
 import re
-from flask import Flask, render_template, request
 import smtplib
 from email.message import EmailMessage
 
@@ -168,22 +167,37 @@ def privacy():
 # PDF → PNG
 @app.route("/convert/png", methods=["POST"])
 def pdf_to_png():
-    pdf_file = request.files["file"]
-    pdf_bytes = pdf_file.read()
-    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-    zip_buffer = BytesIO()
+    try:
+        if "file" not in request.files:
+            return "No se envió ningún archivo", 400
 
-    with zipfile.ZipFile(zip_buffer, "w") as zipf:
-        for i, page in enumerate(doc):
-            pix = page.get_pixmap()
-            img_name = f"page_{i+1}.png"
-            img_path = os.path.join(OUTPUT_FOLDER, img_name)
-            pix.save(img_path)
-            zipf.write(img_path, img_name)
-            os.remove(img_path)
+        pdf_file = request.files["file"]
+        if pdf_file.filename == "":
+            return "Archivo vacío", 400
 
-    zip_buffer.seek(0)
-    return send_file(zip_buffer, as_attachment=True, download_name="imagenes.zip")
+        pdf_bytes = pdf_file.read()
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+
+        zip_buffer = BytesIO()
+
+        with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zipf:
+            for i, page in enumerate(doc):
+                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))  # 🔥 FIX
+                img_name = f"page_{i+1}.png"
+                img_bytes = pix.tobytes("png")
+                zipf.writestr(img_name, img_bytes)
+
+        zip_buffer.seek(0)
+        return send_file(
+            zip_buffer,
+            as_attachment=True,
+            download_name="imagenes.zip",
+            mimetype="application/zip"
+        )
+
+    except Exception as e:
+        print("ERROR PNG:", e)
+        return f"Error procesando el PDF: {str(e)}", 500
 
 # PDF → WORD
 @app.route("/convert/word", methods=["POST"])
@@ -207,5 +221,5 @@ def pdf_to_word():
     return send_file(output_path, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=10007)
 

@@ -93,6 +93,14 @@
     Convierte archivos PDF a documentos Word editables o imágenes PNG fácilmente.
     Funciona con PDFs escaneados y documentos complejos.
 </p>
+<section>
+    <h2>⚡ Cómo usar el convertidor</h2>
+    <p>
+        1️⃣ Selecciona tu archivo PDF<br>
+        2️⃣ Elige el formato de salida<br>
+        3️⃣ Espera unos segundos y descarga tu archivo
+    </p>
+</section>
 
 <section>
     <h2>📄 Convertir PDF a PNG</h2>
@@ -105,9 +113,11 @@
         <input type="file" name="file" id="fileInputPng" accept="application/pdf" required>
         <div class="filename" id="fileNamePng"></div>
         <br>
-        <button type="submit" onclick="this.innerText='Procesando…';">
+        <button type="submit" onclick="startProcess(this, 'statusPng')">
             Convertir a PNG
         </button>
+        <p id="statusPng" style="font-size:14px;color:#555;margin-top:8px;"></p>
+        
     </form>
 </section>
 
@@ -122,9 +132,16 @@
         <input type="file" name="file" id="fileInputWord" accept="application/pdf" required>
         <div class="filename" id="fileNameWord"></div>
         <br>
-        <button type="submit" onclick="this.innerText='Procesando…';">
+        <button type="submit" onclick="startProcess(this, 'statusWord')">
             Convertir a Word
         </button>
+        <p id="statusWord" style="font-size:14px;color:#555;margin-top:8px;"></p>
+        
+        <p style="font-size:13px;color:#777;margin-top:10px;">
+            Nota: Si el PDF es escaneado (imagen), el Word puede quedar vacío.
+            En ese caso recomendamos convertirlo a PNG.
+        </p>
+        
     </form>
 </section>
 
@@ -137,10 +154,6 @@
     </p>
 </section>
 
-<footer>
-    © 2026 Convertidor PDF Online ·
-    <a href="/privacy">Política de Privacidad</a>
-</footer>
 
 <script>
 document.getElementById('fileInputPng').addEventListener('change', (e) => {
@@ -152,13 +165,28 @@ document.getElementById('fileInputWord').addEventListener('change', (e) => {
 });
 </script>
 
-<footer>
+<script>
+    function startProcess(button, statusId) {
+        button.innerText = "Procesando…";
+        button.disabled = true;
+    
+        document.getElementById(statusId).innerText =
+            "⏳ Estamos procesando tu archivo, por favor espera…";
+    }
+    </script>
+    
+
+<footer style="
+    text-align:center;
+    margin-top:40px;
+    font-size:14px;
+    color:#666;
+">
     © 2026 Convertidor PDF Online ·
     <a href="/privacy">Privacidad</a> ·
-    <a href="/contact">Contacto</a> ·
-    <a href="/terms">Términos</a>
+    <a href="/terms">Términos</a> ·
+    <a href="/contact">Contacto</a>
 </footer>
-
 
 </body>
 </html>
