@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Convertidor PDF a Word y PNG Gratis Online</title>
+    <title>Convertidor PDF a Word y PNG Gratis Online | Rápido y Seguro</title>
 
-    <meta name="description" content="Convierte cualquier PDF a Word o imágenes PNG gratis. Compatible con PDFs escaneados y documentos complejos. Rápido, seguro y sin registro.">
+    <meta name="description" content="Convierte archivos PDF a Word editable o imágenes PNG gratis. Compatible con PDFs escaneados, contratos y documentos complejos. Sin registro y rápido.">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO básico -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Convertidor PDF Online">
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 760px;
+            max-width: 780px;
             margin: 40px auto;
             padding: 20px;
             background: #f4f6f8;
@@ -22,56 +26,56 @@
         h1 {
             text-align: center;
             color: #222;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         h2 {
+            color: #222;
+            margin-top: 0;
+        }
+
+        h3 {
             color: #333;
         }
 
-        p {
+        p, li {
             line-height: 1.6;
             font-size: 15px;
         }
 
         section {
             background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
         }
 
         button {
-            padding: 12px 22px;
+            padding: 12px 24px;
             cursor: pointer;
             border: none;
             background: #4CAF50;
             color: white;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, transform 0.1s ease;
         }
 
         button:hover {
             background: #43a047;
+            transform: translateY(-1px);
         }
 
         input[type="file"] {
-            margin: 10px 0;
-        }
-
-        .filename {
-            font-style: italic;
-            font-size: 14px;
-            color: #555;
+            margin: 12px 0;
         }
 
         footer {
             text-align: center;
-            font-size: 13px;
+            font-size: 14px;
             color: #666;
-            margin-top: 40px;
+            margin-top: 50px;
         }
 
         footer a {
@@ -82,107 +86,109 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        ul {
+            padding-left: 20px;
+        }
     </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <h1>Convertidor PDF a Word y PNG Online Gratis</h1>
 
 <p style="text-align:center;">
-    Convierte archivos PDF a documentos Word editables o imágenes PNG fácilmente.
-    Funciona con PDFs escaneados y documentos complejos.
+Convierte archivos PDF a documentos Word editables o imágenes PNG de alta calidad.
+Compatible con PDFs escaneados, contratos, facturas y documentos complejos.
+No requiere registro y funciona directamente desde el navegador.
 </p>
+
+<!-- CÓMO FUNCIONA -->
 <section>
-    <h2>⚡ Cómo usar el convertidor</h2>
+    <h2>⚡ Cómo funciona el convertidor PDF</h2>
     <p>
-        1️⃣ Selecciona tu archivo PDF<br>
-        2️⃣ Elige el formato de salida<br>
-        3️⃣ Espera unos segundos y descarga tu archivo
+        Este convertidor procesa tu archivo PDF directamente en el servidor y genera
+        un archivo descargable en el formato que elijas.
+        El proceso es automático, rápido y seguro.
     </p>
+    <ul>
+        <li>Sube tu archivo PDF desde tu dispositivo</li>
+        <li>Selecciona el formato de salida (Word o PNG)</li>
+        <li>Descarga el archivo convertido al instante</li>
+    </ul>
 </section>
 
+<!-- PDF A PNG -->
 <section>
     <h2>📄 Convertir PDF a PNG</h2>
     <p>
-        Extrae todas las páginas de un PDF como imágenes PNG de alta calidad.
-        Ideal para documentos escaneados.
+        Convierte cada página de un PDF en imágenes PNG de alta resolución.
+        Ideal para documentos escaneados, firmas, formularios o archivos sin texto seleccionable.
     </p>
 
-    <form action="/convert/png" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInputPng" accept="application/pdf" required>
-        <div class="filename" id="fileNamePng"></div>
+    <form action="/convert/png" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="application/pdf" required>
         <br>
-        <button type="submit" onclick="startProcess(this, 'statusPng')">
-            Convertir a PNG
-        </button>
-        <p id="statusPng" style="font-size:14px;color:#555;margin-top:8px;"></p>
-        
+        <button type="submit">Convertir PDF a PNG</button>
     </form>
 </section>
 
+<!-- PDF A WORD -->
 <section>
     <h2>📝 Convertir PDF a Word</h2>
     <p>
-        Convierte PDFs con texto a archivos Word editables.
-        Mantiene párrafos y estructura básica del documento.
+        Convierte archivos PDF con texto a documentos Word editables.
+        Mantiene títulos, párrafos y estructura básica del documento original.
     </p>
 
-    <form action="/convert/word" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInputWord" accept="application/pdf" required>
-        <div class="filename" id="fileNameWord"></div>
+    <form action="/convert/word" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="application/pdf" required>
         <br>
-        <button type="submit" onclick="startProcess(this, 'statusWord')">
-            Convertir a Word
-        </button>
-        <p id="statusWord" style="font-size:14px;color:#555;margin-top:8px;"></p>
-        
-        <p style="font-size:13px;color:#777;margin-top:10px;">
-            Nota: Si el PDF es escaneado (imagen), el Word puede quedar vacío.
-            En ese caso recomendamos convertirlo a PNG.
-            Máx. 5 páginas por archivo
-        </p>
-        
+        <button type="submit">Convertir PDF a Word</button>
     </form>
-</section>
 
-<section>
-    <h2>ℹ️ ¿Cómo funciona este convertidor?</h2>
-    <p>
-        El archivo PDF se procesa directamente en el servidor y no se almacena.
-        Una vez convertido, el documento se descarga automáticamente.
-        No se requiere registro ni datos personales.
+    <p style="font-size:13px;color:#777;margin-top:10px;">
+        ⚠️ Nota: Si el PDF es escaneado (imagen), el archivo Word puede quedar vacío.
+        En ese caso recomendamos convertir el PDF a PNG.
     </p>
 </section>
 
+<!-- FAQ SEO -->
+<section>
+    <h2>❓ Preguntas frecuentes</h2>
 
-<script>
-document.getElementById('fileInputPng').addEventListener('change', (e) => {
-    document.getElementById('fileNamePng').textContent = e.target.files[0].name;
-});
+    <h3>¿El convertidor PDF es gratis?</h3>
+    <p>
+        Sí. El servicio es completamente gratuito y no requiere registro.
+    </p>
 
-document.getElementById('fileInputWord').addEventListener('change', (e) => {
-    document.getElementById('fileNameWord').textContent = e.target.files[0].name;
-});
-</script>
+    <h3>¿Mis archivos se guardan?</h3>
+    <p>
+        No. Los archivos se procesan de forma temporal y no se almacenan.
+    </p>
 
-<script>
-    function startProcess(button, statusId) {
-        button.innerText = "Procesando…";
-        button.disabled = true;
-    
-        document.getElementById(statusId).innerText =
-            "⏳ Estamos procesando tu archivo, por favor espera…";
-    }
-    </script>
-    
+    <h3>¿Funciona con PDFs escaneados?</h3>
+    <p>
+        Sí. Los PDFs escaneados se pueden convertir a imágenes PNG sin problema.
+    </p>
 
-<footer style="
-    text-align:center;
-    margin-top:40px;
-    font-size:14px;
-    color:#666;
-">
+    <h3>¿Funciona en celular?</h3>
+    <p>
+        Sí. El convertidor es compatible con móviles, tablets y computadores.
+    </p>
+</section>
+
+<!-- INFO LEGAL -->
+<section>
+    <h2>ℹ️ Información importante</h2>
+    <p>
+        Este sitio no solicita datos personales ni requiere creación de cuentas.
+        El procesamiento se realiza de manera automática y segura.
+    </p>
+</section>
+
+<footer>
     © 2026 Convertidor PDF Online ·
     <a href="/privacy">Privacidad</a> ·
     <a href="/terms">Términos</a> ·

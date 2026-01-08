@@ -239,8 +239,8 @@ def pdf_to_word():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # usa PORT si existe, si no usa 5000
-    app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 
 
 
