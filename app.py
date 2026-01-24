@@ -7,6 +7,7 @@ import os
 import zipfile
 from io import BytesIO
 import re
+from flask import jsonify
 import smtplib
 from email.message import EmailMessage
 
@@ -138,6 +139,17 @@ def procesar_pagina(word, page):
                 p.paragraph_format.space_after = Pt(6)
 
 # ---------------- Rutas Flask ----------------
+
+@app.route("/feedback", methods=["POST"])
+def feedback():
+    data = request.get_json()
+    print("Feedback recibido:", data.get("feedback"))
+    return jsonify({"status": "ok"})
+
+
+@app.route("/gracias")
+def gracias():
+    return render_template("gracias.html")
 
 
 @app.route("/terms")

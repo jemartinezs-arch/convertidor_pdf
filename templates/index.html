@@ -127,12 +127,15 @@ No requiere registro y funciona directamente desde el navegador.
         Ideal para documentos escaneados, firmas, formularios o archivos sin texto seleccionable.
     </p>
 
-    <form action="/convert/png" method="POST" enctype="multipart/form-data">
+    <form id="pngForm" enctype="multipart/form-data">
         <input type="file" name="file" accept="application/pdf" required>
-        <br>
-        <button type="submit">Convertir PDF a PNG</button>
+        <br><br>
+        <button type="submit" id="pngBtn">Convertir PDF a PNG</button>
+        <p id="pngStatus" style="font-size:14px;color:#555;margin-top:8px;"></p>
     </form>
 </section>
+ 
+
 
 <!-- PDF A WORD -->
 <section>
@@ -142,11 +145,12 @@ No requiere registro y funciona directamente desde el navegador.
         Mantiene títulos, párrafos y estructura básica del documento original.
     </p>
 
-    <form action="/convert/word" method="POST" enctype="multipart/form-data">
+    <form id="wordForm" enctype="multipart/form-data">
         <input type="file" name="file" accept="application/pdf" required>
         <br>
-        <button type="submit">Convertir PDF a Word</button>
-    </form>
+        <button type="submit" id="wordBtn">Convertir PDF a Word</button>
+        <p id="wordStatus" style="font-size:14px;color:#555;"></p>
+            </form>
 
     <p style="font-size:13px;color:#777;margin-top:10px;">
         ⚠️ Nota: Si el PDF es escaneado (imagen), el archivo Word puede quedar vacío.
@@ -179,6 +183,8 @@ No requiere registro y funciona directamente desde el navegador.
     </p>
 </section>
 
+
+
 <!-- INFO LEGAL -->
 <section>
     <h2>ℹ️ Información importante</h2>
@@ -195,5 +201,104 @@ No requiere registro y funciona directamente desde el navegador.
     <a href="/contact">Contacto</a>
 </footer>
 
-</body>
+
+<!-- /GRACIAS PNG -->
+
+<script>
+    document.getElementById("pngForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+    
+        const btn = document.getElementById("pngBtn");
+        const status = document.getElementById("pngStatus");
+    
+        btn.disabled = true;
+        btn.innerText = "Procesando…";
+        status.innerText = "⏳ Estamos convirtiendo tu archivo, espera un momento…";
+    
+        const formData = new FormData(this);
+    
+        try {
+            const response = await fetch("/convert/png", {
+                method: "POST",
+                body: formData
+            });
+    
+            if (!response.ok) {
+                throw new Error("Error en el servidor");
+            }
+    
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+    
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "imagenes.zip";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+    
+            setTimeout(() => {
+                window.location.href = "/gracias";
+            }, 1000);
+    
+        } catch (error) {
+            alert("❌ Hubo un error al convertir el archivo.");
+            btn.disabled = false;
+            btn.innerText = "Convertir PDF a PNG";
+            status.innerText = "";
+        }
+    });
+    </script>
+    
+    <!-- /GRACIAS WORD -->
+
+    
+    <script>
+        document.getElementById("wordForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+        
+            const btn = document.getElementById("wordBtn");
+            const status = document.getElementById("wordStatus");
+        
+            btn.disabled = true;
+            btn.innerText = "Procesando…";
+            status.innerText = "⏳ Convirtiendo tu PDF a Word…";
+        
+            const formData = new FormData(this);
+        
+            try {
+                const response = await fetch("/convert/word", {
+                    method: "POST",
+                    body: formData
+                });
+        
+                if (!response.ok) {
+                    throw new Error("Error en el servidor");
+                }
+        
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+        
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "documento.docx";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+        
+                // 👇 AQUÍ SÍ FUNCIONA LA REDIRECCIÓN
+                setTimeout(() => {
+                    window.location.href = "/gracias";
+                }, 800);
+        
+            } catch (error) {
+                alert("❌ Error al convertir el PDF a Word");
+                btn.disabled = false;
+                btn.innerText = "Convertir PDF a Word";
+                status.innerText = "";
+            }
+        });
+        </script>
+        
+</body>    
 </html>
