@@ -140,6 +140,15 @@ def procesar_pagina(word, page):
 
 # ---------------- Rutas Flask ----------------
 
+
+@app.route("/pdf-a-word")
+def pdf_word():
+    return render_template("pdf-a-word.html")
+
+@app.route("/pdf-a-png")
+def pdf_png():
+    return render_template("pdf-a-png.html")
+
 @app.route("/feedback", methods=["POST"])
 def feedback():
     data = request.get_json()

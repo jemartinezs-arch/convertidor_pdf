@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Convertir PDF a PNG Online Gratis | Alta Calidad</title>
+    <meta name="description" content="Convierte cada página de un PDF en imágenes PNG de alta resolución. Gratis, rápido y sin registro.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 780px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            color: #222;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        p, li {
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        button {
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background: #43a047;
+            transform: translateY(-1px);
+        }
+
+        input[type="file"] {
+            margin: 12px 0;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+    
+</head>
+<body style="font-family:Arial; max-width:800px; margin:40px auto;">
+
+<h1>Convertir PDF a PNG Online Gratis</h1>
+
+<p>
+Convierte cada página de tu PDF en imágenes PNG de alta calidad.
+Perfecto para documentos escaneados, firmas, formularios y archivos sin texto editable.
+</p>
+
+<section>
+    <h2>Sube tu PDF y conviértelo a PNG</h2>
+
+    <form id="pngForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept="application/pdf" required>
+        <br><br>
+        <button type="submit" id="pngBtn">Convertir PDF a PNG</button>
+        <p id="pngStatus"></p>
+    </form>
+</section>
+
+<section>
+    <h2>¿Cómo funciona?</h2>
+    <p>
+        Nuestro sistema convierte cada página del PDF en una imagen PNG individual
+        manteniendo calidad y resolución.
+    </p>
+</section>
+
+<section>
+    <h2>Ejemplos de uso</h2>
+    <ul>
+        <li>📄 Extraer firmas escaneadas</li>
+        <li>🧾 Convertir facturas en imágenes</li>
+        <li>📚 Guardar páginas como imágenes</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Preguntas frecuentes</h2>
+
+    <h3>¿Pierde calidad la imagen?</h3>
+    <p>No, se genera en alta resolución.</p>
+
+    <h3>¿Es gratis?</h3>
+    <p>Sí, completamente gratis.</p>
+
+    <h3>¿Funciona en celular?</h3>
+    <p>Sí, es compatible con dispositivos móviles.</p>
+</section>
+
+<p>
+👉 ¿Necesitas editar texto? 
+<a href="/pdf-a-word">Convierte tu PDF a Word aquí</a>
+</p>
+
+<script>
+document.getElementById("pngForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById("pngBtn");
+    const status = document.getElementById("pngStatus");
+
+    btn.disabled = true;
+    btn.innerText = "Procesando…";
+    status.innerText = "Convirtiendo archivo...";
+
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch("/convert/png", {
+            method: "POST",
+            body: formData
+        });
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "imagenes.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(() => {
+            window.location.href = "/gracias";
+        }, 800);
+
+    } catch {
+        alert("Error al convertir archivo");
+    }
+});
+</script>
+
+<footer style="
+    text-align:center;
+    margin-top:40px;
+    font-size:14px;
+    color:#666;
+">
+    © 2026 Convertidor PDF Online ·
+    <a href="/privacy">Privacidad</a> ·
+    <a href="/terms">Términos</a> ·
+    <a href="/contact">Contacto</a>
+</footer>
+
+</body>
+</html>

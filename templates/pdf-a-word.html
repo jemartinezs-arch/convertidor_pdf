@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Convertir PDF a Word Online Gratis | Rápido y Seguro</title>
+    <meta name="description" content="Convierte archivos PDF a Word editable (.docx) gratis. Mantén texto y estructura. Sin registro y compatible con móvil.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 780px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            color: #222;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        p, li {
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        button {
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background: #43a047;
+            transform: translateY(-1px);
+        }
+
+        input[type="file"] {
+            margin: 12px 0;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body style="font-family:Arial; max-width:800px; margin:40px auto;">
+
+<h1>Convertir PDF a Word Online Gratis</h1>
+
+<p>
+Convierte tus archivos PDF a documentos Word editables en segundos.
+Ideal para contratos, trabajos académicos, facturas y documentos administrativos.
+No requiere registro y funciona directamente desde tu navegador.
+</p>
+
+<section>
+    <h2>Sube tu PDF y conviértelo a Word</h2>
+
+    <form id="wordForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept="application/pdf" required>
+        <br><br>
+        <button type="submit" id="wordBtn">Convertir PDF a Word</button>
+        <p id="wordStatus"></p>
+    </form>
+</section>
+
+<section>
+    <h2>¿Cómo funciona?</h2>
+    <p>
+        Nuestra herramienta procesa tu archivo PDF y genera un documento Word (.docx)
+        manteniendo el texto y la estructura básica del documento original.
+    </p>
+</section>
+
+<section>
+    <h2>Ejemplos de uso</h2>
+    <ul>
+        <li>📄 Editar un contrato en Word</li>
+        <li>📚 Convertir trabajos académicos</li>
+        <li>🧾 Modificar facturas en formato editable</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Preguntas frecuentes</h2>
+
+    <h3>¿Es gratis convertir PDF a Word?</h3>
+    <p>Sí, completamente gratis.</p>
+
+    <h3>¿Funciona con PDFs escaneados?</h3>
+    <p>Si el PDF es imagen, puede no detectar texto correctamente.</p>
+
+    <h3>¿Es seguro?</h3>
+    <p>Los archivos se procesan automáticamente y no se almacenan.</p>
+
+    <h3>¿Funciona en celular?</h3>
+    <p>
+        Sí. El convertidor es compatible con móviles, tablets y computadores.
+    </p>
+</section>
+
+<p>
+👉 ¿Necesitas imágenes en lugar de texto? 
+<a href="/pdf-a-png">Convierte tu PDF a PNG aquí</a>
+</p>
+
+<script>
+document.getElementById("wordForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById("wordBtn");
+    const status = document.getElementById("wordStatus");
+
+    btn.disabled = true;
+    btn.innerText = "Procesando…";
+    status.innerText = "Convirtiendo archivo...";
+
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch("/convert/word", {
+            method: "POST",
+            body: formData
+        });
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "documento.docx";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(() => {
+            window.location.href = "/gracias";
+        }, 800);
+
+    } catch {
+        alert("Error al convertir archivo");
+    }
+});
+</script>
+
+<footer style="
+    text-align:center;
+    margin-top:40px;
+    font-size:14px;
+    color:#666;
+">
+    © 2026 Convertidor PDF Online ·
+    <a href="/privacy">Privacidad</a> ·
+    <a href="/terms">Términos</a> ·
+    <a href="/contact">Contacto</a>
+</footer>
+
+
+</body>
+</html>
